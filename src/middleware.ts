@@ -56,8 +56,8 @@ export async function middleware(request: NextRequest) {
 	}
 
 	return
-}
-
+	//TODO: create errors message for Unauthorized
+}	
 export const config = {
 	matcher: ['/cart/:path*', '/favorites', '/auth/:path*', '/admin/:path*']
 }
