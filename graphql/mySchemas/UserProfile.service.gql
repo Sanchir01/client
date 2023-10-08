@@ -1,0 +1,6 @@
+query GetUserProfile {
+	getProfile {
+		id
+		isAdmin
+	}
+}

@@ -1,0 +1,13 @@
+.footer {
+	padding: 50px 0;
+	@apply bg-bg_footer text-text_footer;
+	&__wrapper {
+		@apply flex items-center justify-between;
+	}
+	&__column {
+		@apply flex flex-col gap-2;
+	}
+	&__title {
+		@apply flex flex-col gap-2;
+	}
+}

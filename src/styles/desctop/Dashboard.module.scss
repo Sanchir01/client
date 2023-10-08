@@ -1,0 +1,15 @@
+.dashboard {
+	padding-top: 100px;
+	color: black;
+	&__container {
+		margin-top: 50px;
+		@apply px-10;
+	}
+	&__title {
+		margin-bottom: 50px;
+		font-size: 35px;
+	}
+	&__product {
+		@apply flex flex-col gap-2;
+	}
+}

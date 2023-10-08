@@ -1,0 +1,24 @@
+.bg {
+	height: 100vh;
+
+	&__slide {
+		background-repeat: no-repeat;
+		background-position: top center;
+		background-size: cover;
+		height: 100dvh;
+		&__link {
+			margin-top: 400px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
+		}
+		&__title {
+			font-size: 50px;
+		}
+		&__subtitle {
+			font-size: 28px;
+		}
+	}
+}
+

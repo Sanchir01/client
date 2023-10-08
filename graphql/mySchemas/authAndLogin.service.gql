@@ -1,0 +1,21 @@
+mutation Login($loginInput: LoginInput!) {
+	login(loginInput: $loginInput) {
+		accessToken
+		refreshToken
+		user {
+			email
+			id
+			isAdmin
+		}
+	}
+}
+
+mutation getNewToken {
+	newToken {
+		User {
+			isAdmin
+			id
+		}
+		accessToken
+	}
+}

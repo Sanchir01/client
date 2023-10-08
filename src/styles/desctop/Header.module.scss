@@ -1,0 +1,39 @@
+.header {
+	@apply h-20 w-full;
+	&__wrapper {
+		padding: 25px 0;
+		display: grid;
+		align-items: center;
+		grid-template-columns: repeat(3, 1fr);
+	}
+	&__left {
+		display: flex;
+		align-items: center;
+		gap: 15px;
+	}
+	&__logo {
+		font-size: 40px;
+		text-transform: uppercase;
+		justify-self: center;
+	}
+	&__right {
+		justify-self: end;
+		@apply flex items-center gap-4;
+		&__favorites {
+			position: relative;
+			&__span {
+				top: 0;
+				right: 10px;
+				position: absolute;
+			}
+		}
+		&__cart {
+			position: relative;
+			&__span {
+				top: -1px;
+				right: 10px;
+				position: absolute;
+			}
+		}
+	}
+}
