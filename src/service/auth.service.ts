@@ -1,8 +1,10 @@
 import Cookies from 'js-cookie'
+
 export enum EnumTokens {
 	ACCESS_TOKEN = 'accessToken',
 	REFRESH_TOKEN = 'refreshToken'
 }
+
 export const AuthService = {
 	saveTokenToStorage: (refreshToken: string) => {
 		const oneDay = 2 * 24 * 60 * 60 * 1000
@@ -15,6 +17,8 @@ export const AuthService = {
 			path: '/'
 		})
 	},
+	getRefreshToken: () => Cookies.get(EnumTokens.REFRESH_TOKEN),
+
 	removerTokenFromStorage: () => {
 		Cookies.remove(EnumTokens.REFRESH_TOKEN)
 		Cookies.remove(EnumTokens.ACCESS_TOKEN)

@@ -3,5 +3,6 @@ query GetAllCategories {
 		id
 		name
 		slug
+		image
 	}
 }

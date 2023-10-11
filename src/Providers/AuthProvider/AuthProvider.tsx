@@ -13,12 +13,6 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 	const addUser = useUserStore(state => state.addUser)
 	const pathname = usePathname()
 
-	useEffect(() => {
-		if (!user) {
-			return
-		}
-	}, [user])
-
 	const [newTokensMutation] = useMutation(GetNewTokenDocument, {
 		client: defaultClient
 	})
@@ -48,7 +42,6 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 		}
 
 		mutateToken()
-		
 	}, [pathname, user])
 
 	return children

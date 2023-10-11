@@ -4,26 +4,26 @@ import { setContext } from '@apollo/client/link/context'
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc'
 import {
 	NextSSRApolloClient,
-	NextSSRInMemoryCache,
+	NextSSRInMemoryCache
 } from '@apollo/experimental-nextjs-app-support/ssr'
 import Cookies from 'js-cookie'
 
 export const { getClient } = registerApolloClient(() => {
 	const authLink = setContext((_, { headers }) => {
-		const accessToken = Cookies.get(EnumTokens.REFRESH_TOKEN)
+		const token = Cookies.get(EnumTokens.REFRESH_TOKEN)
 		return {
 			headers: {
 				...headers,
-				authorization: accessToken ? `Bearer ${accessToken}` : '',
-			},
+				authorization: token ? `Bearer ${token}` : ''
+			}
 		}
 	})
 	const myLink = new HttpLink({
 		uri: process.env.NEXT_PUBLIC_SERVER_URL,
-		credentials: 'include',
+		credentials: 'include'
 	})
 	return new NextSSRApolloClient({
 		cache: new NextSSRInMemoryCache(),
-		link: authLink.concat(myLink),
+		link: authLink.concat(myLink)
 	})
 })

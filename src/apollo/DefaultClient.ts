@@ -1,3 +1,4 @@
+import { AuthService } from '@/service/auth.service'
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 
@@ -6,9 +7,11 @@ const link = createHttpLink({
 	credentials: 'include'
 })
 const authLink = setContext((_, { headers }) => {
+	const token = AuthService.getRefreshToken()
 	return {
 		headers: {
-			...headers
+			...headers,
+			Authorization: token ? `Bearer ${token}` : ''
 		}
 	}
 })
