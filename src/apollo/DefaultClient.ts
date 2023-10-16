@@ -7,7 +7,7 @@ const link = createHttpLink({
 	credentials: 'include'
 })
 const authLink = setContext((_, { headers }) => {
-	const token = AuthService.getRefreshToken()
+	const token =  AuthService.getRefreshToken()
 	return {
 		headers: {
 			...headers,

@@ -2,7 +2,6 @@ query GetAllProductsDashboard($getAllProductInput: GetAllProductInput!) {
 	getAllProducts(getAllProductInput: $getAllProductInput) {
 		length
 		products {
-			categoryId
 			id
 			images
 			name

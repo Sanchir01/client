@@ -1,13 +1,8 @@
 import styles from '@/styles/desctop/Catalog.module.scss'
+import { IPropsCatalog } from '@/types/Catalog.interface'
 import { FC } from 'react'
-import { GetAllProductsDashboardQuery } from './../../../graphql/gql/graphql'
-
-export interface IPropsCatalog {
-	title: string
-	isFavorites: boolean
-	Products: GetAllProductsDashboardQuery
-	loading: boolean
-}
+import FiltersAndSorting from '../modules/Catalog/FiltersAndSort/FiltersAndSorting'
+import OneItemCatalog from '../modules/Catalog/ItemsCatalog'
 
 const Catalog: FC<IPropsCatalog> = ({
 	title,
@@ -19,14 +14,14 @@ const Catalog: FC<IPropsCatalog> = ({
 		<section className={styles.catalog}>
 			<div className={styles.wrapper}>
 				<h1>{title}</h1>
-				{isFavorites ? <div className={styles.filters}></div> : <></>}
-				{loading
-					? 'Loading'
-					: Products.getAllProducts.products.map(product => (
-							<div key={product.id} className={styles.content}>
-								{product.id}
-							</div>
-					  ))}
+				{isFavorites ? <FiltersAndSorting /> : <></>}
+				<div className={styles.catalog__grid}>
+					{loading
+						? 'Loading'
+						: Products.map(product => (
+								<OneItemCatalog key={product.id} data={product} />
+						  ))}
+				</div>
 			</div>
 		</section>
 	)

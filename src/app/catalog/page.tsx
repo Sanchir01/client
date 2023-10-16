@@ -15,7 +15,7 @@ export default async function Page() {
 	})
 	return (
 		<Catalog
-			Products={items}
+			Products={items.getAllProducts.products}
 			isFavorites
 			title='Модная Одежда Бренда Sandjma'
 			loading={loading}
