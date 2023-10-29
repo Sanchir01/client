@@ -1,36 +1,59 @@
+'use client'
 import styles from '@/styles/desctop/Header.module.scss'
+import { useQuery } from '@apollo/client'
 import Link from 'next/link'
 
+import { defaultClient } from '@/apollo/DefaultClient'
+import {
+	Heart,
+	Search,
+	ShieldCheck,
+	ShoppingCart,
+	UserCircle2
+} from 'lucide-react'
 import { FC } from 'react'
-import { AiOutlineHeart, AiOutlineSearch } from 'react-icons/ai'
-import { BsCart } from 'react-icons/bs'
-import { MdAdminPanelSettings } from 'react-icons/md'
-import { RxAvatar } from 'react-icons/rx'
+
+import { cartStore } from '@/store/Cart.store'
+import { GetUserFavoritesIdArrayDocument } from '../../../../graphql/gql/graphql'
 
 const Header_right: FC = () => {
+	const { data: favo, loading } = useQuery(GetUserFavoritesIdArrayDocument, {
+		client: defaultClient
+	})
+	const cartLenght = cartStore(state => state.cartArray)
 	return (
 		<div className={styles.header__right}>
 			<Link href='/catalog'>
-				<AiOutlineSearch size={30} />
+				<Search size={30} />
 			</Link>
 			<Link href='/favorites'>
 				<div className={styles.header__right__favorites}>
-					<AiOutlineHeart size={30} />
-					<span className={styles.header__right__favorites__span}>1</span>
+					<Heart size={30} />
+					<span className={styles.header__right__favorites__span}>
+						{loading || favo?.getProfile.favorites?.length === 0
+							? ''
+							: favo?.getProfile.favorites?.length}
+					</span>
 				</div>
 			</Link>
 			<Link href='/profile'>
-				<RxAvatar size={30} />
+				<UserCircle2 size={30} />
 			</Link>
 			<Link href='/cart'>
 				<div className={styles.header__right__cart}>
-					<BsCart size={30} />
-					<span className={styles.header__right__cart__span}>1</span>
+					<ShoppingCart size={35} />
+					{cartLenght.length === 0 ? (
+						<></>
+					) : (
+						<span className={styles.header__right__cart__span}>
+							{cartLenght.length}
+						</span>
+					)}
 				</div>
 			</Link>
-			{true ? (
+			{false ? (
 				<Link href={'/admin'}>
-					<MdAdminPanelSettings size={30} />{' '}
+					<ShieldCheck size={30} />
 				</Link>
 			) : (
 				<></>

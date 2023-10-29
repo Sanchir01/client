@@ -1,6 +1,12 @@
-import { GetAllProductsDashboardQuery } from '../../graphql/gql/graphql'
+export interface IItemsSlider {
+	__typename?: string | undefined
+	id: number
+	images: string[]
+	name: string
+	price: number
+}
 
 export interface IDashboardSliderContent {
-	items: GetAllProductsDashboardQuery
+	items: IItemsSlider[]
 	title: string
 }

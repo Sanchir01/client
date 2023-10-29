@@ -1,16 +1,16 @@
 import styles from '@/styles/desctop/Dashboard.module.scss'
+import { IItemsSlider } from '@/types/DasboardSlider'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC } from 'react'
 import 'swiper/css'
 import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { GetAllProductsDashboardQuery } from '../../../../../graphql/gql/graphql'
 
-const Slider: FC<{ items: GetAllProductsDashboardQuery }> = ({ items }) => {
+const Slider: FC<{ items: IItemsSlider[] }> = ({ items }) => {
 	return (
 		<Swiper slidesPerView={3.5} navigation={true} modules={[Navigation]}>
-			{items.getAllProducts.products.map(item => (
+			{items.map(item => (
 				<SwiperSlide key={item.id}>
 					<Link
 						href={`/catalog/${item.id}`}
@@ -26,7 +26,7 @@ const Slider: FC<{ items: GetAllProductsDashboardQuery }> = ({ items }) => {
 							/>
 						</div>
 						<div className=''>{item.name}</div>
-						<span>{item.price} P</span>
+						<p>{item.price} P</p>
 					</Link>
 				</SwiperSlide>
 			))}

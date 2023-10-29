@@ -30,6 +30,7 @@ export type AuthResponse = {
 };
 
 export type CreateCategoryInput = {
+  image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
 };
 
@@ -41,6 +42,11 @@ export type CreateProductInput = {
   news?: InputMaybe<Scalars['Boolean']['input']>;
   price: Scalars['Int']['input'];
   sellers?: InputMaybe<Scalars['Boolean']['input']>;
+  size: Array<Scalars['String']['input']>;
+};
+
+export type CreateSizeInput = {
+  name: Scalars['String']['input'];
 };
 
 export type GetAllProductInput = {
@@ -80,8 +86,10 @@ export type Mutation = {
   __typename?: 'Mutation';
   createCategory: ResponseCategory;
   createProduct: Product;
+  createSize: Size;
   deleteCategory: ResponseCategory;
   deleteProduct: Product;
+  deleteSize: Size;
   login: AuthResponse;
   newToken: NewTokensResponse;
   register: AuthResponse;
@@ -101,6 +109,11 @@ export type MutationCreateProductArgs = {
 };
 
 
+export type MutationCreateSizeArgs = {
+  crateSizeInput: CreateSizeInput;
+};
+
+
 export type MutationDeleteCategoryArgs = {
   id: Scalars['Float']['input'];
 };
@@ -108,6 +121,11 @@ export type MutationDeleteCategoryArgs = {
 
 export type MutationDeleteProductArgs = {
   deleteProductById: GetProductById;
+};
+
+
+export type MutationDeleteSizeArgs = {
+  id: Scalars['Float']['input'];
 };
 
 
@@ -143,6 +161,7 @@ export type Product = {
   images: Array<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   price: Scalars['Int']['output'];
+  size: Array<Size>;
   slug: Scalars['String']['output'];
 };
 
@@ -151,6 +170,7 @@ export type Query = {
   /** allCategories */
   getAllCategories: Array<ResponseCategory>;
   getAllProducts: AllProductsAndLength;
+  getAllSize: Array<Size>;
   getCategoryById: ResponseCategory;
   /** nameGetCategoryBySlug */
   getCategoryBySlug: ResponseCategory;
@@ -192,8 +212,15 @@ export type ResponseCategory = {
   slug: Scalars['String']['output'];
 };
 
+export type Size = {
+  __typename?: 'Size';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type UpdateCategoryInput = {
   id: Scalars['Int']['input'];
+  image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
 };
 
@@ -234,6 +261,13 @@ export type ReturnUserFields = {
   id: Scalars['Int']['output'];
   isAdmin: Scalars['Boolean']['output'];
 };
+
+export type GetOneProductByIdQueryVariables = Exact<{
+  getProductById: GetProductById;
+}>;
+
+
+export type GetOneProductByIdQuery = { __typename?: 'Query', getProductById: { __typename?: 'Product', id: number, description: string, images: Array<string>, name: string, price: number, categoryId: number } };
 
 export type GetUserProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -276,14 +310,8 @@ export type GetAllProductsDashboardQueryVariables = Exact<{
 
 export type GetAllProductsDashboardQuery = { __typename?: 'Query', getAllProducts: { __typename?: 'allProductsAndLength', length: number, products: Array<{ __typename?: 'Product', id: number, images: Array<string>, name: string, price: number }> } };
 
-export type GetProductByIdQueryVariables = Exact<{
-  getProductById: GetProductById;
-}>;
 
-
-export type GetProductByIdQuery = { __typename?: 'Query', getProductById: { __typename?: 'Product', categoryId: number, description: string, id: number, images: Array<string>, name: string, price: number, slug: string } };
-
-
+export const GetOneProductByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOneProductById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"getProductById"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetProductById"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getProductById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"getProductById"},"value":{"kind":"Variable","name":{"kind":"Name","value":"getProductById"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"images"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"categoryId"}}]}}]}}]} as unknown as DocumentNode<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>;
 export const GetUserProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}}]}}]}}]} as unknown as DocumentNode<GetUserProfileQuery, GetUserProfileQueryVariables>;
 export const ToggleFavoritesProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ToggleFavoritesProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"productId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"toggleFavoritesProfile"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"productId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"productId"}}}]}]}}]} as unknown as DocumentNode<ToggleFavoritesProfileMutation, ToggleFavoritesProfileMutationVariables>;
 export const GetUserFavoritesIdArrayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserFavoritesIdArray"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"favorites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GetUserFavoritesIdArrayQuery, GetUserFavoritesIdArrayQueryVariables>;
@@ -291,4 +319,3 @@ export const LoginDocument = {"kind":"Document","definitions":[{"kind":"Operatio
 export const GetNewTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"getNewToken"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"newToken"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"User"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}}]}}]} as unknown as DocumentNode<GetNewTokenMutation, GetNewTokenMutationVariables>;
 export const GetAllCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]} as unknown as DocumentNode<GetAllCategoriesQuery, GetAllCategoriesQueryVariables>;
 export const GetAllProductsDashboardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllProductsDashboard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"getAllProductInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetAllProductInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllProducts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"getAllProductInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"getAllProductInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"length"}},{"kind":"Field","name":{"kind":"Name","value":"products"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"images"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllProductsDashboardQuery, GetAllProductsDashboardQueryVariables>;
-export const GetProductByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProductById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"getProductById"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetProductById"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getProductById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"getProductById"},"value":{"kind":"Variable","name":{"kind":"Name","value":"getProductById"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryId"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"images"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]} as unknown as DocumentNode<GetProductByIdQuery, GetProductByIdQueryVariables>;

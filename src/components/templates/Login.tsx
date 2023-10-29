@@ -13,7 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { defaultClient } from '@/apollo/DefaultClient'
 import { AuthService } from '@/service/auth.service'
-import { useUserStore } from '@/store/userProfile'
+import { useUserStore } from '@/store/userProfile.store'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { FC } from 'react'
@@ -45,7 +45,7 @@ const Login: FC = () => {
 	const [mutation] = useMutation(LoginDocument, {
 		client: defaultClient
 	})
-	const { replace } = useRouter()
+	const { push } = useRouter()
 
 	const onSubmitForm = async (data: LoginInput) => {
 		await mutation({
@@ -60,7 +60,7 @@ const Login: FC = () => {
 				if (data) {
 					responserUser(data)
 					toast.success('Успешная вход в аккаунт'),
-						replace('/'),
+						push('/'),
 						AuthService.saveTokenToStorage(data.login.accessToken)
 					form.reset()
 				}

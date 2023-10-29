@@ -6,27 +6,27 @@ import Link from 'next/link'
 import { FC } from 'react'
 import Header_left from './Header_left'
 import Header_right from './Header_right'
+
 const ContentHeader: FC = () => {
 	return (
-		
-			<Container>
-				<div className={styles.header__wrapper}>
-					<Header_left />
-					<div className={styles.header__logo}>
-						<Link className={styles.header__logo__link} href='/'>
-							<Image
-								className='object-cover'
-								src={logo}
-								width={200}
-								height={100}
-								alt='logo'
-							/>
-						</Link>
-					</div>
-					<Header_right />
+		<Container>
+			<div className={styles.header__wrapper}>
+				<Header_left />
+				<div className={styles.header__logo}>
+					<Link className={styles.header__logo__link} href='/'>
+						<Image
+							loading='lazy'
+							className='object-cover'
+							src={logo}
+							width={200}
+							height={100}
+							alt='logo'
+						/>
+					</Link>
 				</div>
-			</Container>
-		
+				<Header_right />
+			</div>
+		</Container>
 	)
 }
 

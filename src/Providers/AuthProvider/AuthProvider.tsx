@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { defaultClient } from '@/apollo/DefaultClient'
 import { AuthService, EnumTokens } from '@/service/auth.service'
-import { useUserStore } from '@/store/userProfile'
+import { useUserStore } from '@/store/userProfile.store'
 import { useMutation } from '@apollo/client'
 import Cookies from 'js-cookie'
 import { usePathname } from 'next/navigation'

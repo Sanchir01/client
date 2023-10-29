@@ -5,7 +5,7 @@ export const BGContent = [
 		subtitle: 'Новая коллецкия в магазине Sandjma',
 		href: '/catalog',
 		image: 'https://i.ibb.co/7JXBQPX/bg.jpg',
-		buttonText: 'К покупкам',
+		buttonText: 'К покупкам'
 	},
 	{
 		id: 2,
@@ -13,7 +13,7 @@ export const BGContent = [
 		subtitle: 'Новая коллецкия в магазине Sandjma',
 		href: '/catalog',
 		image: 'https://i.ibb.co/7JXBQPX/bg.jpg',
-		buttonText: 'К покупкам',
+		buttonText: 'К покупкам'
 	},
 	{
 		id: 3,
@@ -21,7 +21,7 @@ export const BGContent = [
 		subtitle: 'Новая коллецкия в магазине Sandjma',
 		href: '/catalog',
 		image: 'https://i.ibb.co/7JXBQPX/bg.jpg',
-		buttonText: 'К покупкам',
+		buttonText: 'К покупкам'
 	},
 	{
 		id: 4,
@@ -29,6 +29,6 @@ export const BGContent = [
 		subtitle: 'Новая коллецкия в магазине Sandjma',
 		href: '/catalog',
 		image: 'https://i.ibb.co/7JXBQPX/bg.jpg',
-		buttonText: 'К покупкам',
-	},
+		buttonText: 'К покупкам'
+	}
 ]

@@ -13,14 +13,16 @@ const Catalog: FC<IPropsCatalog> = ({
 	return (
 		<section className={styles.catalog}>
 			<div className={styles.wrapper}>
-				<h1>{title}</h1>
+				<h1 className={styles.catalog__title}>{title}</h1>
 				{isFavorites ? <FiltersAndSorting /> : <></>}
 				<div className={styles.catalog__grid}>
-					{loading
-						? 'Loading'
-						: Products.map(product => (
-								<OneItemCatalog key={product.id} data={product} />
-						  ))}
+					{loading ? (
+						<div className='text-black'></div>
+					) : (
+						Products.map(product => (
+							<OneItemCatalog key={product.id} data={product} />
+						))
+					)}
 				</div>
 			</div>
 		</section>

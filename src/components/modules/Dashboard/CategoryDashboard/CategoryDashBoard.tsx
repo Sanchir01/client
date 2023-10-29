@@ -6,14 +6,20 @@ import OneCategoryBlock from './OneCategoryBlock'
 
 const CategoryDashBoard: FC = async () => {
 	const { data, loading } = await getClient().query({
-		query: GetAllCategoriesDocument
+		query: GetAllCategoriesDocument,
+		context: {
+			fetchOptions: {
+				next: { revalidate: 50 }
+			}
+		}
 	})
+
 	return (
 		<section className={styles.category}>
 			<div className={styles.wrapper}>
 				<div className={styles.category}>
 					{loading ? (
-						<div>"Loading"</div>
+						<div>Loading</div>
 					) : (
 						data.getAllCategories.map(item => (
 							<OneCategoryBlock

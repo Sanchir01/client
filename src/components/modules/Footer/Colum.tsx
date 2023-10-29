@@ -2,7 +2,7 @@
 import {
 	Accordion,
 	AccordionItem,
-	AccordionTrigger,
+	AccordionTrigger
 } from '@/components/ui/accordion'
 import { footerContent } from '@/constants/Footer_content'
 import { AccordionContent } from '@radix-ui/react-accordion'
@@ -15,8 +15,8 @@ export function AccordionDemo() {
 			collapsible={true}
 			className=' text-black items-center px-10 w-full'
 		>
-			{footerContent.map(content => (
-				<AccordionItem key={content.title} value={content.title}>
+			{footerContent.map((content, i) => (
+				<AccordionItem key={i} value={content.title}>
 					<AccordionTrigger className='text-xl'>
 						{content.title}
 					</AccordionTrigger>

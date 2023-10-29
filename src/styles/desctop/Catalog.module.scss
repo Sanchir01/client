@@ -1,9 +1,16 @@
 .catalog {
-	@apply text-black mt-[100px];
+	@apply text-black mt-[150px];
 	.wrapper {
-		@apply px-5;
+		@apply flex flex-col gap-4 px-5;
+	}
+	&__title {
+		padding-top: 20px;
+		font-size: 35px;
+		font-weight: 500;
+		@apply flex items-center justify-center;
 	}
 	&__grid {
+		padding-top: 30px;
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		grid-auto-rows: minmax(200px, 700px);

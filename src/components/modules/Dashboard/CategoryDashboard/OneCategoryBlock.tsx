@@ -18,9 +18,7 @@ const OneCategoryBlock: FC<PropsDashboardCategory> = ({ image, title }) => {
 				/>
 				<div className={styles.item}>
 					<div className={styles.title}>{title}</div>
-					<Button className={styles.btn} >
-						К покупкам
-					</Button>
+					<Button className={styles.btn}>К покупкам</Button>
 				</div>
 			</Link>
 		</div>

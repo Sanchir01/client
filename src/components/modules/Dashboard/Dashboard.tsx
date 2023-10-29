@@ -12,7 +12,7 @@ async function Dashboard() {
 		},
 		context: {
 			fetchOptions: {
-				next: { revalidate: 600 }
+				next: { revalidate: 60 }
 			}
 		}
 	})
@@ -23,7 +23,7 @@ async function Dashboard() {
 		},
 		context: {
 			fetchOptions: {
-				next: { revalidate: 600 }
+				next: { revalidate: 60 }
 			}
 		}
 	})
@@ -34,12 +34,15 @@ async function Dashboard() {
 			{loading ? (
 				'Loading'
 			) : (
-				<DashboardSlider items={newsProduct} title='Новинки' />
+				<DashboardSlider
+					title='Новинки'
+					items={newsProduct.getAllProducts.products}
+				/>
 			)}
 			{loadingSeller ? (
 				'Loading'
 			) : (
-				<DashboardSlider items={sellers} title='Хиты' />
+				<DashboardSlider title='Хиты' items={sellers.getAllProducts.products} />
 			)}
 		</div>
 	)

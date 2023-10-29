@@ -9,15 +9,3 @@ query GetAllProductsDashboard($getAllProductInput: GetAllProductInput!) {
 		}
 	}
 }
-
-query GetProductById($getProductById: GetProductById!) {
-	getProductById(getProductById: $getProductById) {
-		categoryId
-		description
-		id
-		images
-		name
-		price
-		slug
-	}
-}
