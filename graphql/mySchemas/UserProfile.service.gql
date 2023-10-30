@@ -16,3 +16,18 @@ query GetUserFavoritesIdArray {
 		}
 	}
 }
+
+query GetUserFavoritesAll {
+	getProfile {
+		favorites {
+			id
+			images
+			name
+			price
+			size {
+				name
+				id
+			}
+		}
+	}
+}

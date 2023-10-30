@@ -1,8 +1,9 @@
 'use client'
-import { useSuspenseQuery, } from '@apollo/client'
+import { defaultClient } from '@/apollo/DefaultClient'
+import { useSuspenseQuery } from '@apollo/client'
 import {
 	GetAllProductInput,
-	GetAllProductsDashboardDocument,
+	GetAllProductsDashboardDocument
 } from '../../graphql/gql/graphql'
 
 export const useGetProductNoSeo = ({
@@ -14,7 +15,7 @@ export const useGetProductNoSeo = ({
 	page = '1',
 	perPage = '4',
 	seller,
-	searchTerm,
+	searchTerm
 }: GetAllProductInput) => {
 	const { data, error } = useSuspenseQuery(GetAllProductsDashboardDocument, {
 		variables: {
@@ -27,11 +28,11 @@ export const useGetProductNoSeo = ({
 				page,
 				perPage,
 				seller,
-				searchTerm,
-			},
+				searchTerm
+			}
 		},
+		client: defaultClient
 	})
-	data.getAllProducts
 
 	return { data, error }
 }

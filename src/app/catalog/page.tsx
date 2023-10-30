@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 }
 type Props = {
 	params: {}
-	searchParams: { sorting: string; categoryId: string }
+	searchParams: { sorting: string; categoryId: string; maxRange: string }
 }
 export default function Page(props: Props) {
 	const sorting = props.searchParams

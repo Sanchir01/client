@@ -20,7 +20,6 @@ const ProductContent: FC<{ item: IProductContent }> = ({ item }) => {
 	const [Size, setSize] = useState<ISize>({} as ISize)
 	const cart = cartStore(state => state.cartArray)
 	const toggleCart = cartStore(state => state.toggleCart)
-	console.log(Size, activeIndex)
 
 	const toggleSizeActive = ({ size }: { size: ISize }) => {
 		setActiveIndex(size.id), setSize(size)
@@ -42,7 +41,7 @@ const ProductContent: FC<{ item: IProductContent }> = ({ item }) => {
 		})
 	}
 
-	const isExistCartItem = cart.find(item => item.id === item.id)
+	const isExistCartItem = cart.find(cart => cart.id === item.id)
 	return (
 		<div className='flex flex-col gap-4'>
 			<h1 className='text-3xl font-semibold'>{item.name}</h1>

@@ -8,7 +8,8 @@ const Catalog: FC<IPropsCatalog> = ({
 	title,
 	isFavorites = false,
 	Products,
-	loading
+	loading,
+	notFoundProduct = ''
 }) => {
 	return (
 		<section className={styles.catalog}>
@@ -16,8 +17,10 @@ const Catalog: FC<IPropsCatalog> = ({
 				<h1 className={styles.catalog__title}>{title}</h1>
 				{isFavorites ? <FiltersAndSorting /> : <></>}
 				<div className={styles.catalog__grid}>
-					{loading ? (
-						<div className='text-black'></div>
+					{Products.length === 0 || loading ? (
+						<div className='text-black text-xl font-medium'>
+							{notFoundProduct}
+						</div>
 					) : (
 						Products.map(product => (
 							<OneItemCatalog key={product.id} data={product} />

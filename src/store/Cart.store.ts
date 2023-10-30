@@ -18,7 +18,7 @@ export interface ICartStore {
 	cartArray: ICartStoreToggle[]
 	totalPrice: number
 	toggleCart: (data: ICartStoreToggle) => void
-	minusItem: (id: number) => void
+	plusItem: (id: number) => void
 	removeItem: (id: number) => void
 	resetCart: () => void
 }
@@ -41,7 +41,7 @@ export const cartStore = create<ICartStore>()(
 					set({ cartArray: [...cartArray, data] })
 				}
 			},
-			minusItem: (id: number) => {
+			plusItem: (id: number) => {
 				const { cartArray } = get()
 				set({
 					cartArray: cartArray.map(item => ({

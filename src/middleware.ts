@@ -10,7 +10,6 @@ export async function middleware(request: NextRequest) {
 	const registerPage = request.nextUrl.pathname.startsWith('/auth/register')
 	const adminPanel = request.url.includes('/admin')
 
-	
 	if (loginPage || registerPage) {
 		if (accessToken && refreshToken) {
 			return NextResponse.redirect(new URL('/', request.url))
@@ -47,7 +46,7 @@ export async function middleware(request: NextRequest) {
 		}).then(response => response.json())
 	).data as GetUserProfileQuery
 
-	if (response.getProfile.isAdmin === false) return
+	if (response.getProfile.isAdmin === true) return
 
 	if (adminPanel) {
 		return NextResponse.redirect(new URL('/404', request.url))

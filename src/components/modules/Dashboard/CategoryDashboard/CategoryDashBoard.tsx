@@ -24,6 +24,7 @@ const CategoryDashBoard: FC = async () => {
 						data.getAllCategories.map(item => (
 							<OneCategoryBlock
 								key={item.id}
+								id={item.id}
 								image={item.image}
 								title={item.name}
 							/>

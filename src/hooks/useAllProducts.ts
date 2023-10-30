@@ -26,5 +26,5 @@ export const useGetAllProduct = () => {
 		}
 	})
 
-	return { items, loading, error }
+	// return { items, loading, error }
 }

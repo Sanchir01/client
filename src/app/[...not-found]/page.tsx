@@ -1,7 +1,6 @@
-import type { Metadata } from 'next'
-
-import { Button } from '@/components/ui/button'
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
+import styles from '@/styles/desctop/NotFound.module.scss'
+import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -11,13 +10,19 @@ export const metadata: Metadata = {
 
 export default function NotFoundPage() {
 	return (
-		<div className='min-h-screen flex flex-col justify-center items-center '>
-			<div className='text-black'>
-				Сожалеем но данной страницы не существует
+		<div className={styles.notfound_box}>
+			<div className={styles.notfound_box_container}>
+				<h1 className={styles.notfound_box_title}>
+					<>404</>
+				</h1>
+				<span className={styles.notfound_box_description}>
+					Извините, но такой страницы не существует
+				</span>
+
+				<Link href={'/catalog'} className={styles.notfound_box_link}>
+					Назад в каталог
+				</Link>
 			</div>
-			<Link href='/' className='text-black mt-3'>
-				<Button>Go back to Home</Button>
-			</Link>
 		</div>
 	)
 }

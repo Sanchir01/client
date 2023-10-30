@@ -58,7 +58,7 @@ const Login: FC = () => {
 		})
 			.then(({ data }) => {
 				if (data) {
-					responserUser(data)
+					responserUser(data.login.user)
 					toast.success('Успешная вход в аккаунт'),
 						push('/'),
 						AuthService.saveTokenToStorage(data.login.accessToken)

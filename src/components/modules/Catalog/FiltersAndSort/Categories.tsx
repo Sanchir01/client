@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 import { defaultClient } from '@/apollo/DefaultClient'
 import { Button } from '@/components/ui/button'
@@ -20,11 +21,13 @@ import {
 	SheetTitle,
 	SheetTrigger
 } from '@/components/ui/sheet'
+import { useCheckParams } from '@/hooks/useCheckParams'
 import { filtersStore } from '@/store/Catalog.store'
 import { useQuery } from '@apollo/client'
 import { SlidersHorizontal } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { FC, useState } from 'react'
+import { useShallow } from 'zustand/react/shallow'
 import { GetAllCategoriesDocument } from '../../../../../graphql/gql/graphql'
 import Range from './Range'
 const Categories: FC = () => {
@@ -32,28 +35,33 @@ const Categories: FC = () => {
 		client: defaultClient
 	})
 
-	const [categoriesId, setCategoriesId] = useState<string>('')
+	const [categoriesIdZustand, changeCategoriesId, sliderValue, changeRangeMax] =
+		filtersStore(
+			useShallow(state => [
+				state.categoriesId,
+				state.changeCategoriesId,
+				state.rangeMax,
+				state.changeRangeMax
+			])
+		)
 	const [indexCategory, setIndexCategory] = useState<number>(0)
 
 	const { replace } = useRouter()
 	const params = useSearchParams()
+	const pathname = usePathname()
+
 	const sorting = params.get('sorting')
-	const [sliderValue, setSliderValue] = useState<number[]>([10000])
-	const sortingIsExist = sorting ? `&sorting=${sorting}` : ''
-	const rangeSlider = filtersStore(state => state.changeRangeMax)
-	const changeProduct = ({
-		categories,
-		max
-	}: {
-		categories: string
-		max: number[]
-	}) => {
-		rangeSlider(max[0])
-		replace(`/catalog?categoryId=${categories}${sortingIsExist}`)
+
+	const { sortingIsExist } = useCheckParams({ sort: sorting })
+	const changeProduct = () => {
+		replace(
+			`${pathname}?${sortingIsExist}&categoryId=${categoriesIdZustand}&maxRange=${sliderValue}`
+		)
 	}
 
 	const resetFilters = () => {
-		replace(`/catalog?${sortingIsExist}`)
+		changeRangeMax(10000)
+		replace(`${pathname}?${sortingIsExist}`)
 	}
 
 	return (
@@ -71,12 +79,12 @@ const Categories: FC = () => {
 				</SheetHeader>
 				<div className='grid gap-4 py-4'>
 					<div className='grid grid-cols-4 items-center gap-4'>
-						<Label htmlFor='categories' className='text-right'>
+						<Label htmlFor='category' className='text-right'>
 							Выберите категорию
 						</Label>
 						<Select
 							onValueChange={value => (
-								setCategoriesId(value), setIndexCategory(Number(value) - 1)
+								changeCategoriesId(value), setIndexCategory(Number(value) - 1)
 							)}
 						>
 							<SelectTrigger className='w-[220px]'>
@@ -100,7 +108,7 @@ const Categories: FC = () => {
 						</Select>
 					</div>
 				</div>
-				<Range sliderValue={sliderValue} setSliderValue={setSliderValue} />
+				<Range />
 				<SheetFooter>
 					<div className='flex flex-col gap-2 w-full'>
 						<SheetClose asChild>
@@ -109,12 +117,7 @@ const Categories: FC = () => {
 							</Button>
 						</SheetClose>
 						<SheetClose asChild>
-							<Button
-								type='button'
-								onClick={() =>
-									changeProduct({ categories: categoriesId, max: sliderValue })
-								}
-							>
+							<Button type='button' onClick={changeProduct}>
 								Применить фильтры
 							</Button>
 						</SheetClose>

@@ -1,11 +1,8 @@
-import { IPropsProduct } from './Catalog.interface'
-
 export interface IFiltersAndSorting {
-	catalog: IPropsProduct[]
 	sorting: string
-	categoriesId: number
+	categoriesId: string
 	rangeMax: number | null
 	changeSorting: (data: string) => void
 	changeRangeMax: (data: number | null) => void
-	changeCategoriesId: (data: number) => void
+	changeCategoriesId: (data: string) => void
 }
