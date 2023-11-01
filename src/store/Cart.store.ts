@@ -1,66 +1,58 @@
+import { CartStore } from '@/types/cart.types'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-export interface ISize {
-	__typename?: 'Size' | undefined
-	id: number
-	name: string
-}
-
-export interface ICartStoreToggle {
-	id: number
-	name: string
-	price: number
-	size: ISize
-	quantity: number
-}
-
-export interface ICartStore {
-	cartArray: ICartStoreToggle[]
-	totalPrice: number
-	toggleCart: (data: ICartStoreToggle) => void
-	plusItem: (id: number) => void
-	removeItem: (id: number) => void
-	resetCart: () => void
-}
-
-export const cartStore = create<ICartStore>()(
+export const useCartStore = create<CartStore>()(
 	persist(
-		(set, get) => ({
-			cartArray: [],
+		set => ({
+			cart: [],
 			totalPrice: 0,
-			toggleCart: (data: ICartStoreToggle) => {
-				const { cartArray } = get()
-				const isExistCart = cartArray.some(item => item.id === data.id)
-				if (isExistCart) {
-					const index = cartArray.findIndex(item => item.id === data.id)
-					if (index !== -1) {
-						const filtered = cartArray.filter(item => item.id !== data.id)
-						set({ cartArray: filtered })
-					}
-				} else {
-					set({ cartArray: [...cartArray, data] })
-				}
-			},
-			plusItem: (id: number) => {
-				const { cartArray } = get()
-				set({
-					cartArray: cartArray.map(item => ({
-						...item,
-						quantity: item.id === id ? item.quantity++ : item.quantity
-					}))
-				})
-			},
+			toggleCartItem: item =>
+				set(state => {
+					const index = state.cart.findIndex(
+						cartItem =>
+							cartItem.id === item.id && cartItem.size.id === item.size.id
+					)
 
-			removeItem: (id: number) => {
-				const { cartArray } = get()
-				const filtered = cartArray.filter(item => item.id !== id)
-				set({ cartArray: filtered })
-			},
-			resetCart: () => set({ cartArray: [] })
+					if (index === -1) {
+						state.cart.push(item)
+						state.totalPrice += item.price
+					} else {
+						state.cart.splice(index, 1)
+						state.totalPrice -= item.price
+					}
+
+					return { cart: [...state.cart], totalPrice: state.totalPrice }
+				}),
+			plus: data =>
+				set(state => {
+					const index = state.cart.findIndex(
+						cartItem =>
+							cartItem.id === data.id && cartItem.size.id === data.size.id
+					)
+
+					state.cart[index].quantity += 1
+					state.totalPrice -= state.cart[index].price
+
+					return { cart: [...state.cart], totalPrice: state.totalPrice }
+				}),
+			minus: data =>
+				set(state => {
+					const index = state.cart.findIndex(
+						cartItem =>
+							cartItem.id === data.id && cartItem.size.id === data.size.id
+					)
+
+					state.cart[index].quantity -= 1
+					state.totalPrice -= state.cart[index].price
+
+					return { cart: [...state.cart], totalPrice: state.totalPrice }
+				}),
+
+			resetCart: () => set({ cart: [] })
 		}),
 		{
-			version: 1,
+			version: 0,
 			name: 'cart',
 			storage: createJSONStorage(() => localStorage)
 		}

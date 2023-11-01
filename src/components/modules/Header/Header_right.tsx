@@ -13,7 +13,7 @@ import {
 } from 'lucide-react'
 import { FC, useEffect, useState } from 'react'
 
-import { cartStore } from '@/store/Cart.store'
+import { useCartStore } from '@/store/Cart.store'
 import { useUserStore } from '@/store/userProfile.store'
 import { GetUserFavoritesIdArrayDocument } from '../../../../graphql/gql/graphql'
 
@@ -24,7 +24,7 @@ const Header_right: FC = () => {
 	const userIsAdmin = useUserStore(state => state.user?.isAdmin)
 
 	const [hasHydrated, setHasHydrated] = useState(false)
-	const cartLenght = cartStore(state => state.cartArray)
+	const cartLenght = useCartStore(state => state.cart)
 
 	useEffect(() => {
 		useUserStore.persist.rehydrate()

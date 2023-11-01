@@ -1,9 +1,12 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { SizeArray } from '@/constants/Size.content'
-import { ISize, cartStore } from '@/store/Cart.store'
-import { FC, useState } from 'react'
+
+import { useCartStore } from '@/store/Cart.store'
+import { useParameterCloth } from '@/store/ParametsCloth.store'
+import { ISize } from '@/types/cart.types'
+import { FC } from 'react'
 import AddToFavoritesItem from '../Catalog/AddTofavoritesItem'
+import SizeLine from './SizeLine'
 
 export interface IProductContent {
 	__typename?: string | undefined
@@ -13,17 +16,14 @@ export interface IProductContent {
 	name: string
 	price: number
 	categoryId: number
+	size: ISize[]
 }
 
 const ProductContent: FC<{ item: IProductContent }> = ({ item }) => {
-	const [activeIndex, setActiveIndex] = useState<number>(0)
-	const [Size, setSize] = useState<ISize>({} as ISize)
-	const cart = cartStore(state => state.cartArray)
-	const toggleCart = cartStore(state => state.toggleCart)
-
-	const toggleSizeActive = ({ size }: { size: ISize }) => {
-		setActiveIndex(size.id), setSize(size)
-	}
+	const cart = useCartStore(state => state.cart)
+	const toggleCart = useCartStore(state => state.toggleCartItem)
+	const sizeParameter = useParameterCloth(state => state.size)
+	console.log(cart)
 
 	const toggleCartButton = ({
 		item,
@@ -48,22 +48,20 @@ const ProductContent: FC<{ item: IProductContent }> = ({ item }) => {
 			<p className='text-xl'>Тут на будущее сделал блок для вб айди</p>
 			<p className='text-xl'>Sandjma Store</p>
 			<p className='text-xl'>{item.price} Р</p>
-			<div className='flex gap-2'>
-				{SizeArray.map((size, i) => (
-					<Button
-						onClick={() => toggleSizeActive({ size: size })}
-						variant={size.id === activeIndex ? 'default' : 'outline'}
-						key={size.id}
-					>
-						{size.size}
-					</Button>
-				))}
-			</div>
+			<SizeLine />
 			<div className='flex gap-3 items-center'>
-				<Button onClick={() => toggleCartButton({ item: item, Size: Size })}>
+				<Button
+					onClick={() => toggleCartButton({ item: item, Size: sizeParameter })}
+				>
 					{!!isExistCartItem ? 'Удалить из корзины' : 'Добавить в корзину'}
 				</Button>
-				<AddToFavoritesItem id={item.id} />
+				<AddToFavoritesItem
+					id={item.id}
+					images={item.images}
+					name={item.name}
+					price={item.price}
+					size={item.size}
+				/>
 			</div>
 		</div>
 	)

@@ -1,24 +1,24 @@
-import { ISize } from '@/store/Cart.store'
+import { ISize } from '@/types/cart.types'
 
 export const SizeArray: ISize[] = [
 	{
 		id: 0,
-		size: 'XL'
+		name: 'XL'
 	},
 	{
 		id: 1,
-		size: 'XS'
+		name: 'XS'
 	},
 	{
 		id: 2,
-		size: 'L'
+		name: 'L'
 	},
 	{
 		id: 3,
-		size: 'M'
+		name: 'M'
 	},
 	{
 		id: 4,
-		size: 'S'
+		name: 'S'
 	}
 ]

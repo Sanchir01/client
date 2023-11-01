@@ -6,5 +6,9 @@ query GetOneProductById($getProductById: GetProductById!) {
 		name
 		price
 		categoryId
+		size {
+			id
+			name
+		}
 	}
 }
