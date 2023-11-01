@@ -23,7 +23,13 @@ const OneItemCatalog: FC<IPropsOneItem> = ({ data }) => {
 					<h5>{data.name}</h5>
 					<p>{data.price} P</p>
 				</div>
-				<AddToFavoritesItem id={data.id} />
+				<AddToFavoritesItem
+					id={data.id}
+					images={data.images}
+					price={data.price}
+					name={data.name}
+					size={data.size || []}
+				/>
 			</div>
 		</div>
 	)

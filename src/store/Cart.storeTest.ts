@@ -24,6 +24,14 @@ export const useCart = create<CartState>(set => ({
 		set(state => {
 			const itemId = product.id
 			const existingItem = state.items[itemId]
+			if (existingItem.size !== size) {
+				return {
+					items: {
+						...state.items,
+						[itemId]: existingItem
+					}
+				}
+			}
 			const quantity = existingItem ? existingItem.quantity + 1 : 1
 			const newItem: CartItem = {
 				product,

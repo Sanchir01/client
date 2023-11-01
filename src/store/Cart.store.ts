@@ -2,8 +2,9 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 export interface ISize {
+	__typename?: 'Size' | undefined
 	id: number
-	size: string
+	name: string
 }
 
 export interface ICartStoreToggle {

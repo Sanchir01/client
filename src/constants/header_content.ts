@@ -12,7 +12,7 @@ export const BGContent = [
 		title: 'Sandjma 22-23',
 		subtitle: 'Новая коллецкия в магазине Sandjma',
 		href: '/catalog',
-		image: 'https://i.ibb.co/7JXBQPX/bg.jpg',
+		image: 'https://i.ibb.co/qmRhkzv/photo-2023-10-30-19-14-46-2.png',
 		buttonText: 'К покупкам'
 	},
 	{
@@ -28,7 +28,7 @@ export const BGContent = [
 		title: 'Sandjma 22-23',
 		subtitle: 'Новая коллецкия в магазине Sandjma',
 		href: '/catalog',
-		image: 'https://i.ibb.co/7JXBQPX/bg.jpg',
+		image: 'https://i.ibb.co/qmRhkzv/photo-2023-10-30-19-14-46-2.png',
 		buttonText: 'К покупкам'
 	}
 ]

@@ -5,14 +5,21 @@ import { useMutation, useQuery } from '@apollo/client'
 import { FC } from 'react'
 import toast from 'react-hot-toast'
 
+import { ISize } from '@/store/Cart.store'
 import { Heart } from 'lucide-react'
-import Link from 'next/link'
 import {
+	GetUserFavoritesAllDocument,
 	GetUserFavoritesIdArrayDocument,
 	ToggleFavoritesProfileDocument
 } from '../../../../graphql/gql/graphql'
 
-const AddToFavoritesItem: FC<{ id: number }> = ({ id }) => {
+const AddToFavoritesItem: FC<{
+	id: number
+	images: string[]
+	name: string
+	price: number
+	size: ISize[]
+}> = ({ id, images, name, price, size }) => {
 	const [mutate] = useMutation(ToggleFavoritesProfileDocument, {
 		client: defaultClient,
 		update(cache) {
@@ -23,7 +30,46 @@ const AddToFavoritesItem: FC<{ id: number }> = ({ id }) => {
 			const isDeleteFavorites = ArrayId?.getProfile.favorites?.filter(
 				el => el.id !== id
 			)
+			const favoritesArray = cache.readQuery({
+				query: GetUserFavoritesAllDocument
+			})
 
+			const favoritesIsExist = favoritesArray?.getProfile.favorites?.find(
+				favo => favo.id === id
+			)
+
+			const filteredFavoritesItem =
+				favoritesArray?.getProfile.favorites?.filter(favo => favo.id !== id)
+
+			if (!!favoritesIsExist) {
+				cache.writeQuery({
+					query: GetUserFavoritesAllDocument,
+					data: {
+						getProfile: {
+							favorites: [...filteredFavoritesItem!]
+						}
+					}
+				})
+			} else {
+				cache.writeQuery({
+					query: GetUserFavoritesAllDocument,
+					data: {
+						getProfile: {
+							favorites: [
+								{
+									__typename: 'Product',
+									id: id,
+									images: images,
+									name: name,
+									price: price,
+									size: size ? size : []
+								},
+								...favoritesArray?.getProfile.favorites!
+							]
+						}
+					}
+				})
+			}
 			if (!!isArray) {
 				cache.writeQuery({
 					query: GetUserFavoritesIdArrayDocument,
@@ -60,22 +106,7 @@ const AddToFavoritesItem: FC<{ id: number }> = ({ id }) => {
 	const toggle = async (id: number) => {
 		await mutate({ variables: { productId: id } })
 			.then(res => toast.success(res.data?.toggleFavoritesProfile as string))
-			.catch(er =>
-				toast.loading(
-					<div className='flex flex-col gap-3 bg-white  items-center text-black'>
-						<p>Для добавления в избранное нужно войти в аккаунт</p>
-						<Link className='w-full' href={'/auth/login'}>
-							<Button className='w-full' type='button' variant={'default'}>
-								Войти
-							</Button>
-						</Link>
-						<Button className='w-full' type='submit' variant={'default'}>
-							Закрыть
-						</Button>
-					</div>,
-					{ duration: 2000 }
-				)
-			)
+			.catch(er => console.log(er))
 	}
 	return (
 		<Button onClick={() => toggle(id)} variant={'secondary'}>

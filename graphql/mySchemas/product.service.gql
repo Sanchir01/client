@@ -6,6 +6,10 @@ query GetAllProductsDashboard($getAllProductInput: GetAllProductInput!) {
 			images
 			name
 			price
+			size {
+				id
+				name
+			}
 		}
 	}
 }
