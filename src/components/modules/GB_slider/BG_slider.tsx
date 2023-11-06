@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { Button } from '@/components/ui/button'
 import { BGContent } from '@/constants/header_content'
@@ -14,7 +15,7 @@ import { Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 const BG_slider: FC = () => {
-	const { ref, inView, entry } = useInView({
+	const { ref, inView } = useInView({
 		threshold: 0.85
 	})
 	const toggleHeader = ToggleHeader(state => state.toggleHeaderBoolean)
@@ -27,11 +28,10 @@ const BG_slider: FC = () => {
 			<div className='wrapper-slider'>
 				<Swiper
 					className={`h-screen`}
-					modules={[Pagination]}
 					spaceBetween={50}
 					slidesPerView={1}
+					modules={[Pagination]}
 					pagination={{ clickable: true }}
-					autoplay={true}
 					loop={true}
 				>
 					{BGContent.map(item => (

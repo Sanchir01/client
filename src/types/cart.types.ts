@@ -5,6 +5,7 @@ export interface ISize {
 }
 export interface ICartStoreToggle {
 	id: number
+	image: string
 	name: string
 	price: number
 	size: ISize
@@ -15,7 +16,8 @@ export interface CartStore {
 	cart: ICartStoreToggle[]
 	totalPrice: number
 	toggleCartItem: (item: ICartStoreToggle) => void
-	minus: (data: ICartStoreToggle) => void
-	plus: (data: ICartStoreToggle) => void
+	minus: (id: number, size: ISize) => void
+	plus: (id: number, size: ISize) => void
+
 	resetCart: () => void
 }

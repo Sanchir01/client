@@ -23,13 +23,14 @@ const Header_right: FC = () => {
 	})
 	const userIsAdmin = useUserStore(state => state.user?.isAdmin)
 
-	const [hasHydrated, setHasHydrated] = useState(false)
 	const cartLenght = useCartStore(state => state.cart)
+	const [hasHydrated, setHasHydrated] = useState(false)
 
 	useEffect(() => {
 		useUserStore.persist.rehydrate()
 		setHasHydrated(true)
 	}, [])
+
 	if (!hasHydrated) return null
 
 	return (

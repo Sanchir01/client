@@ -22,7 +22,7 @@ const OneItem: FC<IOneItem> = ({ similar, item }) => {
 				<ArrowLeft />
 				<p>В каталог</p>
 			</Link>
-			<div className='flex gap-20  mt-10'>
+			<div className='flex gap-20  mt-10 justify-center'>
 				<ProductGallery images={item.getProductById.images} />
 				<ProductContent item={item.getProductById} />
 			</div>

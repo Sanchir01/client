@@ -17,7 +17,7 @@ const ProductGallery: FC<{ images: string[] }> = ({ images }) => {
 						<Image
 							className='w-full h-full hover:scale-110 transition-all rounded-lg'
 							src={image}
-							alt=''
+							alt={image}
 							width={200}
 							height={200}
 							draggable={false}
@@ -26,7 +26,7 @@ const ProductGallery: FC<{ images: string[] }> = ({ images }) => {
 					</Button>
 				))}
 			</div>
-			<div className='w-[700px] h-[880px]'>
+			<div className='w-[580px] h-[720px]'>
 				<Image
 					priority
 					src={images[activeIndex]}
@@ -34,7 +34,7 @@ const ProductGallery: FC<{ images: string[] }> = ({ images }) => {
 					alt={images[activeIndex]}
 					width={200}
 					height={200}
-					draggable={false}
+					draggable={true}
 				/>
 			</div>
 		</div>

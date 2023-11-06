@@ -11,8 +11,10 @@ const nextConfig = {
 				protocol: 'https',
 				hostname: 'i.ibb.co'
 			}
-		]
-	}
+		],
+		formats: ['image/avif', 'image/webp']
+	},
+	
 }
 
 module.exports = nextConfig

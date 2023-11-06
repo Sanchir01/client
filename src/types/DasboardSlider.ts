@@ -9,4 +9,5 @@ export interface IItemsSlider {
 export interface IDashboardSliderContent {
 	items: IItemsSlider[]
 	title: string
+	className?:string
 }

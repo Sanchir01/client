@@ -1,0 +1,28 @@
+.cart {
+	margin: 120px 0;
+	color: black;
+	&__wrapper {
+		max-width: 1200px;
+		@apply mx-auto;
+	}
+
+	&__header {
+		@apply flex justify-between mx-auto items-center;
+		&__title {
+			font-size: 40px;
+		}
+	}
+	&__main {
+		@apply flex gap-5 mt-20 ;
+		&__items {
+			@apply flex  flex-col gap-7;
+		}
+		&__order {
+			@apply flex-1;
+		}
+	}
+}
+.sale {
+	text-decoration-line: line-through;
+	color: #b1b1b1;
+}

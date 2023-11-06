@@ -1,3 +1,4 @@
+'use client'
 import Container from '@/Providers/Container/Container'
 import logo from '@/assets/header/logo.png'
 import styles from '@/styles/desctop/Header.module.scss'
@@ -15,8 +16,9 @@ const ContentHeader: FC = () => {
 				<div className={styles.header__logo}>
 					<Link className={styles.header__logo__link} href='/'>
 						<Image
-							loading='lazy'
-							className='object-cover'
+							quality={100}
+							priority
+							className={styles.img}
 							src={logo}
 							width={200}
 							height={100}

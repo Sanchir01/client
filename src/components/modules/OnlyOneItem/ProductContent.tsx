@@ -37,11 +37,14 @@ const ProductContent: FC<{ item: IProductContent }> = ({ item }) => {
 			name: item.name,
 			price: item.price,
 			size: Size,
-			quantity: 1
+			quantity: 1,
+			image: item.images[0]
 		})
 	}
 
-	const isExistCartItem = cart.find(cart => cart.id === item.id)
+	const isExistCart = cart.findIndex(
+		cart => cart.id === item.id && cart.size === sizeParameter
+	)
 	return (
 		<div className='flex flex-col gap-4'>
 			<h1 className='text-3xl font-semibold'>{item.name}</h1>
@@ -53,7 +56,7 @@ const ProductContent: FC<{ item: IProductContent }> = ({ item }) => {
 				<Button
 					onClick={() => toggleCartButton({ item: item, Size: sizeParameter })}
 				>
-					{!!isExistCartItem ? 'Удалить из корзины' : 'Добавить в корзину'}
+					{isExistCart !== -1 ? 'Удалить из корзины' : 'Добавить в корзину'}
 				</Button>
 				<AddToFavoritesItem
 					id={item.id}

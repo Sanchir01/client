@@ -9,7 +9,6 @@ export async function middleware(request: NextRequest) {
 	const loginPage = request.nextUrl.pathname.startsWith('/auth/login')
 	const registerPage = request.nextUrl.pathname.startsWith('/auth/register')
 	const adminPanel = request.url.includes('/admin')
-
 	if (loginPage || registerPage) {
 		if (accessToken && refreshToken) {
 			return NextResponse.redirect(new URL('/', request.url))

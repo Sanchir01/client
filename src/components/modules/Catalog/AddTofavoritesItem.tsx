@@ -1,25 +1,25 @@
+/* eslint-disable react/display-name */
 'use client'
 import { defaultClient } from '@/apollo/DefaultClient'
 import { Button } from '@/components/ui/button'
+import { IPropsProduct } from '@/types/Catalog.interface'
 import { useMutation, useQuery } from '@apollo/client'
+import { Heart } from 'lucide-react'
 import { FC } from 'react'
 import toast from 'react-hot-toast'
-
-import { ISize } from '@/store/Cart.store'
-import { Heart } from 'lucide-react'
 import {
 	GetUserFavoritesAllDocument,
 	GetUserFavoritesIdArrayDocument,
 	ToggleFavoritesProfileDocument
 } from '../../../../graphql/gql/graphql'
 
-const AddToFavoritesItem: FC<{
-	id: number
-	images: string[]
-	name: string
-	price: number
-	size: ISize[]
-}> = ({ id, images, name, price, size }) => {
+const AddToFavoritesItem: FC<IPropsProduct> = ({
+	id,
+	images,
+	name,
+	price,
+	size
+}) => {
 	const [mutate] = useMutation(ToggleFavoritesProfileDocument, {
 		client: defaultClient,
 		update(cache) {
@@ -94,7 +94,6 @@ const AddToFavoritesItem: FC<{
 			}
 		}
 	})
-
 	const { data: favo, loading } = useQuery(GetUserFavoritesIdArrayDocument, {
 		client: defaultClient
 	})
