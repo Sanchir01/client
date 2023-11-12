@@ -1,6 +1,7 @@
 import { getClient } from '@/apollo/clietn'
 import CategoryDashBoard from '@/components/modules/Dashboard/CategoryDashboard/CategoryDashBoard'
 import styles from '@/styles/desctop/Dashboard.module.scss'
+import { Suspense } from 'react'
 import { GetAllProductsDashboardDocument } from '../../../../graphql/gql/graphql'
 import DashboardSlider from './dashboardSlider/DashboardSlider'
 
@@ -31,19 +32,22 @@ async function Dashboard() {
 	return (
 		<div className={styles.dashboard}>
 			<CategoryDashBoard />
-			{loading ? (
-				'Loading'
-			) : (
-				<DashboardSlider
-					title='Новинки'
-					items={newsProduct.getAllProducts.products}
-				/>
-			)}
-			{loadingSeller ? (
-				'Loading'
-			) : (
-				<DashboardSlider title='Хиты' items={sellers.getAllProducts.products} />
-			)}
+			{
+				<Suspense fallback='Loading'>
+					<DashboardSlider
+						title='Новинки'
+						items={newsProduct.getAllProducts.products}
+					/>
+				</Suspense>
+			}
+			{
+				<Suspense fallback='Loading'>
+					<DashboardSlider
+						title='Хиты'
+						items={sellers.getAllProducts.products}
+					/>
+				</Suspense>
+			}
 		</div>
 	)
 }
