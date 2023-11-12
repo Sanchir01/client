@@ -51,7 +51,7 @@ export default async function ProductPage({
 }: {
 	params: { id: string }
 }) {
-	const { data: item } = await getClient().query({
+	const { data: itemData } = await getClient().query({
 		query: GetOneProductByIdDocument,
 		variables: {
 			getProductById: {
@@ -66,11 +66,11 @@ export default async function ProductPage({
 			}
 		}
 	})
-	const { data: similar } = await getClient().query({
+	const { data: similarData } = await getClient().query({
 		query: GetAllProductsDashboardDocument,
 		variables: {
 			getAllProductInput: {
-				categoryId: item.getProductById.categoryId.toString(),
+				categoryId: itemData.getProductById.categoryId.toString(),
 				page: '1'
 			}
 		},
@@ -82,5 +82,8 @@ export default async function ProductPage({
 			}
 		}
 	})
-	return <OneItem similar={similar} item={item} />
+
+	const [similar, items] = await Promise.all([similarData, itemData])
+	
+	return <OneItem similar={similar} item={items} />
 }

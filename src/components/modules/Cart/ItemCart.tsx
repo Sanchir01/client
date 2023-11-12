@@ -6,7 +6,7 @@ import { ISize } from '@/types/cart.types'
 import { Delete, Minus, Plus } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FC } from 'react'
+import { FC, memo } from 'react'
 import { useShallow } from 'zustand/react/shallow'
 import AddToFavoritesItem from '../Catalog/AddTofavoritesItem'
 
@@ -31,7 +31,7 @@ const ItemCart: FC<IItemCart> = ({
 		useShallow(state => [state.minus, state.plus, state.toggleCartItem])
 	)
 	return (
-		<div className='flex gap-10 justify-center'>
+		<div className='flex gap-10'>
 			<Link href={`/catalog/${id}`}>
 				<Image loading='lazy' src={image} alt={name} width={210} height={290} />
 			</Link>
@@ -99,4 +99,4 @@ const ItemCart: FC<IItemCart> = ({
 	)
 }
 
-export default ItemCart
+export default memo(ItemCart)

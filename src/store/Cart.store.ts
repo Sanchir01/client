@@ -19,7 +19,7 @@ export const useCartStore = create<CartStore>()(
 						state.totalPrice += item.price
 					} else {
 						state.cart.splice(index, 1)
-						state.totalPrice += item.price
+						state.totalPrice -= item.price
 					}
 
 					return { cart: [...state.cart], totalPrice: state.totalPrice }

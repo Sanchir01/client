@@ -1,12 +1,14 @@
 import { allItems } from '@/lib/utils'
 import { useCartStore } from '@/store/Cart.store'
 import { FC } from 'react'
+import { useShallow } from 'zustand/react/shallow'
 import PushOrder from './pushOrder'
 
 const Order: FC = () => {
-	const cart = useCartStore(state => state.cart)
+	const [cart, totalPrice] = useCartStore(
+		useShallow(state => [state.cart, state.totalPrice])
+	)
 
-	const totalPrice = useCartStore(state => state.totalPrice)
 	const allQuantity = allItems(cart)
 
 	return (

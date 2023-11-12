@@ -2,7 +2,7 @@
 	margin: 120px 0;
 	color: black;
 	&__wrapper {
-		max-width: 1200px;
+		max-width: 1300px;
 		@apply mx-auto;
 	}
 
@@ -13,7 +13,7 @@
 		}
 	}
 	&__main {
-		@apply flex gap-5 mt-20 ;
+		@apply flex gap-5 mt-20 justify-between;
 		&__items {
 			@apply flex  flex-col gap-7;
 		}

@@ -34,18 +34,34 @@ export type CreateCategoryInput = {
   name: Scalars['String']['input'];
 };
 
+export type CreateColorInput = {
+  imageCss: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+};
+
+export type CreateInsolationInput = {
+  name: Scalars['String']['input'];
+};
+
 export type CreateProductInput = {
   categorySlug: Scalars['String']['input'];
+  colors: Array<Scalars['String']['input']>;
   description: Scalars['String']['input'];
   images: Array<Scalars['String']['input']>;
+  insolation: Scalars['String']['input'];
   name: Scalars['String']['input'];
   news?: InputMaybe<Scalars['Boolean']['input']>;
   price: Scalars['Int']['input'];
+  productColor: Scalars['String']['input'];
   sellers?: InputMaybe<Scalars['Boolean']['input']>;
   size: Array<Scalars['String']['input']>;
 };
 
 export type CreateSizeInput = {
+  name: Scalars['String']['input'];
+};
+
+export type DeleteInsolationInput = {
   name: Scalars['String']['input'];
 };
 
@@ -69,12 +85,20 @@ export type GetCategoryBySlugInput = {
   slug: Scalars['String']['input'];
 };
 
+export type GetProductByColor = {
+  colorId: Scalars['Int']['input'];
+  slug: Scalars['String']['input'];
+};
+
 export type GetProductById = {
   id: Scalars['Int']['input'];
 };
 
-export type GetProductBySlug = {
-  slug: Scalars['String']['input'];
+export type Insolation = {
+  __typename?: 'Insolation';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  slug: Scalars['String']['output'];
 };
 
 export type LoginInput = {
@@ -84,18 +108,32 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  crateInsolation: Insolation;
   createCategory: ResponseCategory;
-  createProduct: Product;
+  createColor: ReturnColors;
+  createProduct: ReturnFieldByCreateProduct;
+  createProductColor: ProductColor;
   createSize: Size;
   deleteCategory: ResponseCategory;
+  deleteColor: ReturnColors;
+  deleteInsolation: Insolation;
   deleteProduct: Product;
+  deleteProductColor: ProductColor;
   deleteSize: Size;
   login: AuthResponse;
   newToken: NewTokensResponse;
   register: AuthResponse;
   toggleFavoritesProfile: Scalars['String']['output'];
   updateCategory: ResponseCategory;
+  updateColor: ReturnColors;
+  updateInsolation: Insolation;
+  updateProductColor: ProductColor;
   updateProfile: User;
+};
+
+
+export type MutationCrateInsolationArgs = {
+  createInsolationInput: CreateInsolationInput;
 };
 
 
@@ -104,8 +142,18 @@ export type MutationCreateCategoryArgs = {
 };
 
 
+export type MutationCreateColorArgs = {
+  createReturnColorsInput: CreateColorInput;
+};
+
+
 export type MutationCreateProductArgs = {
   createProductInput: CreateProductInput;
+};
+
+
+export type MutationCreateProductColorArgs = {
+  productColorInput: ProductColorInput;
 };
 
 
@@ -119,8 +167,23 @@ export type MutationDeleteCategoryArgs = {
 };
 
 
+export type MutationDeleteColorArgs = {
+  deleteReturnColorsInput: CreateColorInput;
+};
+
+
+export type MutationDeleteInsolationArgs = {
+  deleteInsolationInput: DeleteInsolationInput;
+};
+
+
 export type MutationDeleteProductArgs = {
   deleteProductById: GetProductById;
+};
+
+
+export type MutationDeleteProductColorArgs = {
+  productColorInput: ProductColorInput;
 };
 
 
@@ -149,6 +212,21 @@ export type MutationUpdateCategoryArgs = {
 };
 
 
+export type MutationUpdateColorArgs = {
+  updateReturnColorsInput: CreateColorInput;
+};
+
+
+export type MutationUpdateInsolationArgs = {
+  updateInsolationInput: UpdateInsolationInput;
+};
+
+
+export type MutationUpdateProductColorArgs = {
+  productColorInput: ProductColorInput;
+};
+
+
 export type MutationUpdateProfileArgs = {
   updateUserProfileInput: UpdateUserProfileInput;
 };
@@ -156,26 +234,49 @@ export type MutationUpdateProfileArgs = {
 export type Product = {
   __typename?: 'Product';
   categoryId: Scalars['Int']['output'];
+  colors: Array<ReturnColors>;
   description: Scalars['String']['output'];
   id: Scalars['Int']['output'];
   images: Array<Scalars['String']['output']>;
+  insulationId: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   price: Scalars['Int']['output'];
   size: Array<Size>;
   slug: Scalars['String']['output'];
 };
 
+export type ProductColor = {
+  __typename?: 'ProductColor';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  slug: Scalars['String']['output'];
+};
+
+export type ProductColorInput = {
+  name: Scalars['String']['input'];
+};
+
+export type ProductFiled = {
+  __typename?: 'ProductFiled';
+  categoryId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   /** allCategories */
   getAllCategories: Array<ResponseCategory>;
+  getAllColors: Array<ReturnColors>;
+  getAllInsolation: Array<Insolation>;
+  getAllProduct: Array<ProductColor>;
   getAllProducts: AllProductsAndLength;
   getAllSize: Array<Size>;
   getCategoryById: ResponseCategory;
   /** nameGetCategoryBySlug */
   getCategoryBySlug: ResponseCategory;
+  getProductByColor: Array<Product>;
   getProductById: Product;
-  getProductBySlug: Product;
   getProfile: User;
 };
 
@@ -195,13 +296,13 @@ export type QueryGetCategoryBySlugArgs = {
 };
 
 
-export type QueryGetProductByIdArgs = {
-  getProductById: GetProductById;
+export type QueryGetProductByColorArgs = {
+  getProductByColor: GetProductByColor;
 };
 
 
-export type QueryGetProductBySlugArgs = {
-  getProductBySlug: GetProductBySlug;
+export type QueryGetProductByIdArgs = {
+  getProductById: GetProductById;
 };
 
 export type ResponseCategory = {
@@ -209,6 +310,26 @@ export type ResponseCategory = {
   id: Scalars['Int']['output'];
   image: Scalars['String']['output'];
   name: Scalars['String']['output'];
+  slug: Scalars['String']['output'];
+};
+
+export type ReturnColors = {
+  __typename?: 'ReturnColors';
+  id: Scalars['Int']['output'];
+  imageCss: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  products: Array<ProductFiled>;
+  slug: Scalars['String']['output'];
+};
+
+export type ReturnFieldByCreateProduct = {
+  __typename?: 'ReturnFieldByCreateProduct';
+  categoryId: Scalars['Int']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  images: Array<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  price: Scalars['Int']['output'];
   slug: Scalars['String']['output'];
 };
 
@@ -221,6 +342,10 @@ export type Size = {
 export type UpdateCategoryInput = {
   id: Scalars['Int']['input'];
   image?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type UpdateInsolationInput = {
   name: Scalars['String']['input'];
 };
 
