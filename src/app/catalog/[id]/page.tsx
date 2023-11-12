@@ -12,7 +12,7 @@ import {
 
 export const revalidate = 60
 
-export async function generateMetadata({
+export async function generateStaticParams({
 	params
 }: {
 	params: { id: string }
@@ -53,9 +53,7 @@ export async function generateMetadata({
 	}
 }
 
-export const generateStaticParams = async () => {
-	
-
+export const getStaticPaths = async () => {
 	const { data } = (
 		await axios.post(process.env.NEXT_PUBLIC_SERVER_URL as string, {
 			query: `query GetAllProductsDashboard($getAllProductInput: GetAllProductInput!) {
@@ -81,11 +79,11 @@ export const generateStaticParams = async () => {
 		})
 	).data
 
-	const paths = data.getAllProducts.products.map((item: any) => {
-		return [{ params: { id: item.id } }]
+	const paths = data.getAllProducts.products.map((item: TypeParamSlug) => {
+		return { params: { id: item.id?.toString() } }
 	})
 
-	return paths
+	return { paths: paths, fallback: 'blocking' }
 }
 
 async function getData(params: TypeParamSlug) {

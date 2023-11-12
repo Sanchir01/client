@@ -14,7 +14,6 @@ export const { getClient } = registerApolloClient(() => {
 		const token = cookieStore.get(EnumTokens.ACCESS_TOKEN)?.value
 
 		const tokens = Cookies.get(EnumTokens.ACCESS_TOKEN)
-		console.log(token, 'token')
 		return {
 			headers: {
 				...headers,
