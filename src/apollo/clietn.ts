@@ -6,16 +6,19 @@ import {
 	NextSSRApolloClient,
 	NextSSRInMemoryCache
 } from '@apollo/experimental-nextjs-app-support/ssr'
+import Cookies from 'js-cookie'
 import { cookies } from 'next/headers'
-
 export const { getClient } = registerApolloClient(() => {
 	const authLink = setContext((_, { headers }) => {
 		const cookieStore = cookies()
 		const token = cookieStore.get(EnumTokens.ACCESS_TOKEN)?.value
+
+		const tokens = Cookies.get(EnumTokens.ACCESS_TOKEN)
+		console.log(token, 'token')
 		return {
 			headers: {
 				...headers,
-				authorization: token ? `Bearer ${token}` : ''
+				authorization: tokens ? `Bearer ${tokens}` : ''
 			}
 		}
 	})

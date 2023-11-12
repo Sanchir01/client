@@ -1,11 +1,15 @@
 import { getClient } from '@/apollo/clietn'
 import OneItem from '@/components/templates/OneItem'
-import { TypeParams } from '@/types/Params.interface'
+import { EnumTokens } from '@/service/auth.service'
+import { TypeParamSlug, TypeParams } from '@/types/Params.interface'
+import axios from 'axios'
 import { Metadata } from 'next'
+import { cookies } from 'next/headers'
 import {
 	GetAllProductsDashboardDocument,
 	GetOneProductByIdDocument
 } from '../../../../graphql/gql/graphql'
+
 export const revalidate = 60
 
 export async function generateMetadata({
@@ -49,22 +53,45 @@ export async function generateMetadata({
 	}
 }
 
-export async function generateStaticParams() {
-	const productParams = await getClient().query({
-		query: GetAllProductsDashboardDocument,
-		variables: { getAllProductInput: { page: '1' } }
-	})
+export const generateStaticParams = async () => {
+	
 
-	const paths = productParams.data.getAllProducts.products.map(items => {
-		return {
-			params: { id: items.id }
+	const { data } = (
+		await axios.post(process.env.NEXT_PUBLIC_SERVER_URL as string, {
+			query: `query GetAllProductsDashboard($getAllProductInput: GetAllProductInput!) {
+	getAllProducts(getAllProductInput: $getAllProductInput) {
+		length
+		products {
+			id
+			images
+			name
+			price
+			size {
+				id
+				name
+			}
 		}
+	}
+}`,
+			variables: {
+				getAllProductInput: {
+					page: '1'
+				}
+			}
+		})
+	).data
+
+	const paths = data.getAllProducts.products.map((item: any) => {
+		return [{ params: { id: item.id } }]
 	})
 
 	return paths
 }
 
-export default async function ProductPage({ params }: TypeParams) {
+async function getData(params: TypeParamSlug) {
+	const cookie = cookies().get(EnumTokens.ACCESS_TOKEN)?.value
+
+	console.log(cookie)
 	const { data: itemData } = await getClient().query({
 		query: GetOneProductByIdDocument,
 		variables: {
@@ -80,17 +107,14 @@ export default async function ProductPage({ params }: TypeParams) {
 				categoryId: itemData.getProductById.categoryId.toString(),
 				page: '1'
 			}
-		},
-		context: {
-			fetchOptions: {
-				next: {
-					revalidate: 60
-				}
-			}
 		}
 	})
 
-	const [similar, items] = await Promise.all([similarData, itemData])
+	return { similarData, itemData }
+}
 
-	return <OneItem similar={similar} item={items} />
+export default async function ProductPage({ params }: TypeParams) {
+	const data = await getData(params)
+
+	return <OneItem similar={data.similarData} item={data.itemData} />
 }
