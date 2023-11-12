@@ -9,13 +9,12 @@ import {
 import { cookies } from 'next/headers'
 export const { getClient } = registerApolloClient(() => {
 	const authLink = setContext((_, { headers }) => {
-		const cookieStore = cookies()
-		const token = cookieStore.get(EnumTokens.ACCESS_TOKEN)?.value
+		const cookieStore = cookies().get(EnumTokens.ACCESS_TOKEN)?.value
 
 		return {
 			headers: {
 				...headers,
-				authorization: token ? `Bearer ${token}` : ''
+				authorization: cookieStore ? `Bearer ${cookieStore}` : ''
 			}
 		}
 	})

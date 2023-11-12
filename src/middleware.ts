@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from 'next/server'
+import {  NextResponse, type NextRequest } from 'next/server'
 import { GetUserProfileQuery } from '../graphql/gql/graphql'
 import { EnumTokens } from './service/auth.service'
 

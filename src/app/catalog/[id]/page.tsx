@@ -1,10 +1,8 @@
 import { getClient } from '@/apollo/clietn'
 import OneItem from '@/components/templates/OneItem'
-import { EnumTokens } from '@/service/auth.service'
 import { TypeParamSlug, TypeParams } from '@/types/Params.interface'
 import axios from 'axios'
 import { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import {
 	GetAllProductsDashboardDocument,
 	GetOneProductByIdDocument
@@ -87,9 +85,6 @@ export const getStaticPaths = async () => {
 }
 
 async function getData(params: TypeParamSlug) {
-	const cookie = cookies().get(EnumTokens.ACCESS_TOKEN)?.value
-
-	console.log(cookie)
 	const { data: itemData } = await getClient().query({
 		query: GetOneProductByIdDocument,
 		variables: {
