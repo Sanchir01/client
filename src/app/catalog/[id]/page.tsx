@@ -1,10 +1,12 @@
 import { getClient } from '@/apollo/clietn'
 import OneItem from '@/components/templates/OneItem'
+import { TypeParams } from '@/types/Params.interface'
 import { Metadata } from 'next'
 import {
 	GetAllProductsDashboardDocument,
 	GetOneProductByIdDocument
 } from '../../../../graphql/gql/graphql'
+export const revalidate = 60
 
 export async function generateMetadata({
 	params
@@ -46,23 +48,28 @@ export async function generateMetadata({
 		}
 	}
 }
-export default async function ProductPage({
-	params
-}: {
-	params: { id: string }
-}) {
+
+export async function generateStaticParams() {
+	const productParams = await getClient().query({
+		query: GetAllProductsDashboardDocument,
+		variables: { getAllProductInput: { page: '1' } }
+	})
+
+	const paths = productParams.data.getAllProducts.products.map(items => {
+		return {
+			params: { id: items.id }
+		}
+	})
+
+	return paths
+}
+
+export default async function ProductPage({ params }: TypeParams) {
 	const { data: itemData } = await getClient().query({
 		query: GetOneProductByIdDocument,
 		variables: {
 			getProductById: {
 				id: Number(params.id)
-			}
-		},
-		context: {
-			fetchOptions: {
-				next: {
-					revalidate: 60
-				}
 			}
 		}
 	})
@@ -84,6 +91,6 @@ export default async function ProductPage({
 	})
 
 	const [similar, items] = await Promise.all([similarData, itemData])
-	
+
 	return <OneItem similar={similar} item={items} />
 }
