@@ -16,7 +16,7 @@ const MainCart: FC = () => {
 	}, [])
 
 	if (!hasHydrated) return <>Загрузка</>
-	console.log(cart)
+	console.log(cart, 'cart')
 	return (
 		<div className={styles.cart__main}>
 			<div className={styles.cart__main__items}>

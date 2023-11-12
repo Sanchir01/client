@@ -23,7 +23,7 @@ const ProductContent: FC<{ item: IProductContent }> = ({ item }) => {
 	const cart = useCartStore(state => state.cart)
 	const toggleCart = useCartStore(state => state.toggleCartItem)
 	const sizeParameter = useParameterCloth(state => state.size)
-	console.log(cart)
+	console.log(cart,'корзинга')
 
 	const toggleCartButton = ({
 		item,
