@@ -6,7 +6,7 @@ import { GetAllProductsDashboardDocument } from '../../../../graphql/gql/graphql
 import DashboardSlider from './dashboardSlider/DashboardSlider'
 
 async function Dashboard() {
-	const { data: newsProduct, loading } = await getClient().query({
+	const { data: newsProduct } = await getClient().query({
 		query: GetAllProductsDashboardDocument,
 		variables: {
 			getAllProductInput: { newProduct: true, page: '1', perPage: '8' }
@@ -17,7 +17,7 @@ async function Dashboard() {
 			}
 		}
 	})
-	const { data: sellers, loading: loadingSeller } = await getClient().query({
+	const { data: sellers } = await getClient().query({
 		query: GetAllProductsDashboardDocument,
 		variables: {
 			getAllProductInput: { seller: true, page: '1', perPage: '8' }

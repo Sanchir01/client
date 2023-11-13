@@ -8,9 +8,8 @@ import {
 } from '@apollo/experimental-nextjs-app-support/ssr'
 import { cookies } from 'next/headers'
 export const { getClient } = registerApolloClient(() => {
-	const authLink = setContext((_, { headers }) => {
+	const authLink = setContext(async (_, { headers }) => {
 		const cookieStore = cookies().get(EnumTokens.ACCESS_TOKEN)?.value
-
 		return {
 			headers: {
 				...headers,

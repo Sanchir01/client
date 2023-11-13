@@ -1,74 +1,53 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { getClient } from '@/apollo/clietn'
 import OneItem from '@/components/templates/OneItem'
 import { TypeParamSlug, TypeParams } from '@/types/Params.interface'
 import axios from 'axios'
-import { Metadata } from 'next'
 import {
 	GetAllProductsDashboardDocument,
 	GetOneProductByIdDocument
 } from '../../../../graphql/gql/graphql'
 
 export const revalidate = 60
+export const dynamic = 'force-dynamic'
+// export async function Metadata({
+// 	params
+// }: {
+// 	params: { id: string }
+// }): Promise<Metadata> {
+// 	const product = await getClient().query({
+// 		query: GetOneProductByIdDocument,
+// 		variables: {
+// 			getProductById: {
+// 				id: Number(params.id)
+// 			}
+// 		},
+// 		fetchPolicy: 'network-only'
+// 	})
+// 	return {
+// 		title: product.data.getProductById.name,
+// 		description: product.data.getProductById.description
+// 	}
+// }
 
-export async function generateStaticParams({
-	params
-}: {
-	params: { id: string }
-}): Promise<Metadata> {
-	const product = await getClient().query({
-		query: GetOneProductByIdDocument,
-		variables: {
-			getProductById: {
-				id: Number(params.id)
-			}
-		}
-	})
-	return {
-		title: product.data.getProductById.name,
-		description: product.data.getProductById.description,
-		openGraph: {
-			images: [
-				{
-					url: product.data.getProductById.images[0],
-					width: 500,
-					height: 500,
-					alt: 'Go'
-				},
-				{
-					url: product.data.getProductById.images[0],
-					width: 700,
-					height: 700,
-					alt: 'Go'
-				}
-			],
-			description: product.data.getProductById.description,
-			siteName: 'Sandjma',
-			url: process.env.NEXT_PUBLIC_CLIENT_HOST,
-			locale: 'ru_RU',
-			type: 'website',
-			countryName: 'Kalmyk'
-		}
-	}
-}
-
-export const getStaticPaths = async () => {
+export const generateStaticParams = async () => {
 	const { data } = (
 		await axios.post(process.env.NEXT_PUBLIC_SERVER_URL as string, {
 			query: `query GetAllProductsDashboard($getAllProductInput: GetAllProductInput!) {
-	getAllProducts(getAllProductInput: $getAllProductInput) {
-		length
-		products {
-			id
-			images
-			name
-			price
-			size {
+		getAllProducts(getAllProductInput: $getAllProductInput) {
+			length
+			products {
 				id
+				images
 				name
+				price
+				size {
+					id
+					name
+				}
 			}
 		}
-	}
-}`,
+	}`,
 			variables: {
 				getAllProductInput: {
 					page: '1'
@@ -78,10 +57,10 @@ export const getStaticPaths = async () => {
 	).data
 
 	const paths = data.getAllProducts.products.map((item: TypeParamSlug) => {
-		return { params: { id: item.id?.toString() } }
+		return { params: { id: String(item.id) }, fallback: false }
 	})
 
-	return { paths: paths, fallback: 'blocking' }
+	return paths
 }
 
 async function getData(params: TypeParamSlug) {
