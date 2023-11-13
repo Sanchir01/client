@@ -9,7 +9,6 @@ const link = createHttpLink({
 })
 const authLink = setContext((_, { headers }) => {
 	const token = Cookies.get(EnumTokens.REFRESH_TOKEN)
-
 	return {
 		headers: {
 			...headers,

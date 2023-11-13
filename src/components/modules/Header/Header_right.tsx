@@ -31,7 +31,7 @@ const Header_right: FC = () => {
 		setHasHydrated(true)
 	}, [])
 
-	if (!hasHydrated) return <>Загрузка</>
+	if (!hasHydrated) return <></>
 
 	return (
 		<div className={styles.header__right}>

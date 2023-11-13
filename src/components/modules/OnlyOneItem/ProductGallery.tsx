@@ -20,8 +20,8 @@ const ProductGallery: FC<{ images: string[] }> = ({ images }) => {
 							alt={image}
 							width={200}
 							height={200}
-							draggable={false}
 							priority
+							loading='eager'
 						/>
 					</Button>
 				))}
@@ -34,7 +34,7 @@ const ProductGallery: FC<{ images: string[] }> = ({ images }) => {
 					alt={images[activeIndex]}
 					width={200}
 					height={200}
-					draggable={true}
+					loading='eager'
 				/>
 			</div>
 		</div>

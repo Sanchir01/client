@@ -44,7 +44,7 @@ const BG_slider: FC = () => {
 						>
 							<Link href={item.href} className={styles.bg__slide__link}>
 								<h2 className={styles.bg__slide__title}>{item.title}</h2>
-								<p className={styles.bg__slide__subtitle}>{item.subtitle}</p>
+								<p className={styles.bg__slide__subtitle}>{item.subtitle} </p>
 								<Button className='w-[200px] rounded text-xl'>
 									{item.buttonText}
 								</Button>

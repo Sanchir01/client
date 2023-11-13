@@ -10,7 +10,9 @@ export const Header: FC<{ children: React.ReactNode }> = ({ children }) => {
 	return (
 		<header
 			className={`${styles.header} ${
-				!toggleHeader || pathname !== '/' ? styles.header__sticky : ''
+				!toggleHeader || (pathname !== '/' && pathname !== '/about')
+					? styles.header__sticky
+					: ''
 			} absolute text-xl font-medium z-[2]`}
 		>
 			{children}

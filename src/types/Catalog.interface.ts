@@ -1,3 +1,5 @@
+import { GetUserFavoritesIdArrayQuery } from '../../graphql/gql/graphql'
+
 export interface ISize {
 	__typename?: 'Size' | undefined
 	id: number
@@ -10,6 +12,8 @@ export interface IPropsProduct {
 	name: string
 	price: number
 	size?: ISize[]
+	favorites?: GetUserFavoritesIdArrayQuery
+	loading?: boolean
 }
 
 export interface IPropsCatalog {
@@ -17,7 +21,7 @@ export interface IPropsCatalog {
 	isFavorites?: boolean
 	Products: IPropsProduct[]
 	loading: boolean
-	notFoundProduct?:string
+	notFoundProduct?: string
 }
 
 export interface IPropsOneItem {

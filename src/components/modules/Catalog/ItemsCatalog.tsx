@@ -1,3 +1,4 @@
+'use client'
 import styles from '@/styles/desctop/Catalog.module.scss'
 import { IPropsOneItem } from '@/types/Catalog.interface'
 import Image from 'next/image'

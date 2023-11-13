@@ -12,9 +12,8 @@ const nextConfig = {
 				hostname: 'i.ibb.co'
 			}
 		],
-		formats: ['image/avif', 'image/webp']
-	},
-	
+		formats: ['image/webp', 'image/avif']
+	}
 }
 
 module.exports = nextConfig
