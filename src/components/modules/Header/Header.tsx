@@ -1,6 +1,7 @@
 'use client'
 import { ToggleHeader } from '@/store/ToggleHeader.store'
 import styles from '@/styles/desctop/Header.module.scss'
+import cn from 'clsx'
 import { usePathname } from 'next/navigation'
 import { FC } from 'react'
 
@@ -9,11 +10,11 @@ export const Header: FC<{ children: React.ReactNode }> = ({ children }) => {
 	const toggleHeader = ToggleHeader(state => state.headerBoolean)
 	return (
 		<header
-			className={`${styles.header} ${
-				!toggleHeader || (pathname !== '/' && pathname !== '/about')
-					? styles.header__sticky
-					: ''
-			} absolute text-xl font-medium z-[2]`}
+			className={cn(
+				styles.header,
+				'absolute text-xl font-medium z-[2]',
+				toggleHeader || pathname !== '/' ? '' : styles.header__sticky
+			)}
 		>
 			{children}
 		</header>
