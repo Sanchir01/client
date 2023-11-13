@@ -32,7 +32,7 @@ export const dynamic = 'force-dynamic'
 
 export const generateStaticParams = async () => {
 	const { data } = (
-		await axios.post(process.env.NEXT_PUBLIC_SERVER_URL as string, {
+		await axios.post('http://localhost:5000/graphql', {
 			query: `query GetAllProductsDashboard($getAllProductInput: GetAllProductInput!) {
 		getAllProducts(getAllProductInput: $getAllProductInput) {
 			length
