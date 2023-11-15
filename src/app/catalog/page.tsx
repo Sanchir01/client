@@ -1,6 +1,6 @@
 import MainCatalog from '@/components/modules/Catalog/MainCatalog'
 import { Metadata } from 'next'
-
+export const dynamic = 'force-dynamic'
 export const metadata: Metadata = {
 	title: 'Sandjma | Catalog',
 	description: 'Super store clothes'

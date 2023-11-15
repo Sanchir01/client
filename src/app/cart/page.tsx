@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 	title: 'Корзина',
 	...NO_INDEX_PAGE
 }
-
+export const dynamic = 'force-dynamic'
 export default function Page() {
 	return <Cart />
 }

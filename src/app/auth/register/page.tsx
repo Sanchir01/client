@@ -5,7 +5,7 @@ export const metadata: Metadata = {
 	title: 'Registration',
 	description: 'Registration',
 }
-
+export const dynamic = 'force-dynamic'
 export default function Page() {
 	return <Register />
 }

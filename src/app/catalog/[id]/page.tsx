@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { getClient } from '@/apollo/clietn'
 import OneItem from '@/components/templates/OneItem'
+import { options } from '@/service/axios.instance'
 import { TypeParamSlug, TypeParams } from '@/types/Params.interface'
-import axios from 'axios'
 import { Metadata } from 'next'
 import {
 	GetAllProductsDashboardDocument,
 	GetOneProductByIdDocument
 } from '../../../../graphql/gql/graphql'
+
+export const dynamic = 'force-dynamic'
 
 export const revalidate = 60
 
@@ -31,31 +33,13 @@ export async function generateMetadata({
 }
 
 export const generateStaticParams = async () => {
-	const { data } = (
-		await axios.post(process.env.NEXT_PUBLIC_SERVER_URL as string, {
-			query: `query GetAllProductsDashboard($getAllProductInput: GetAllProductInput!) {
-		getAllProducts(getAllProductInput: $getAllProductInput) {
-			length
-			products {
-				id
-				images
-				name
-				price
-				size {
-					id
-					name
-				}
-			}
-		}
-	}`,
-			variables: {
-				getAllProductInput: {
-					page: '1'
-				}
-			}
-		})
-	).data
+	
 
+	const { data } = await fetch(
+		process.env.NEXT_PUBLIC_SERVER_URL as string,
+		options
+	).then(res => res.json())
+	console.log(data)
 	const paths = data.getAllProducts.products.map((item: TypeParamSlug) => {
 		return { params: { id: String(item.id) }, fallback: false }
 	})
